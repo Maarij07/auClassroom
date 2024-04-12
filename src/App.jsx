@@ -1,23 +1,23 @@
-import { useState } from 'react';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import './App.css';
-import {Router, Routes, Route } from 'react-router';
 import { Home, Login } from './components/index';
 import { IsUserRedirect, ProtectedRoute } from './Routes/Routes';
 import { useLocalContext } from './context/context';
 
 function App() {
-  const {loggedInMail} =useLocalContext();
+  const { loggedInMail } = useLocalContext();
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-       <IsUserRedirect user={loggedInMail} loggedInPath='/' path='/login' exact>
-          <Login/>
-       </IsUserRedirect>
-       <ProtectedRoute user={loggedInMail} path='/' exact>
-          <Home/>
-       </ProtectedRoute>
+        <IsUserRedirect user={loggedInMail} loggedInPath='/' path='/login' exact>
+          <Login />
+        </IsUserRedirect>
+        <ProtectedRoute user={loggedInMail} path='/' exact>
+          <Home />
+        </ProtectedRoute>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
