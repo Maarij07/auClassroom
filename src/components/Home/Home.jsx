@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Avatar, Menu, MenuItem } from '@mui/material';
-import { CreateClass, JoinClass } from '../index';
+import { CreateClass, JoinClass, Todos, Sidebar } from '../index';
 import { useLocalContext } from '../../context/context';
 import Calendar from 'react-calendar';
 
@@ -77,33 +77,30 @@ const Navbar = () => {
 
 const Home = ({ children }) => {
 
-
-
     return (
-        <div className="h-screen flex w-[80rem] text-black">
-            <div className="">
-                <Navbar />
-                <CreateClass />
-                <JoinClass />
-                <p>New</p>
-            </div>
-            <div className="bg-[#f0f0f0] h-screen w-[20rem] flex flex-col justify-between py-8 px-6">
-                <div className="flex justify-end items-center gap-4">
-                    <div className="text-right ">
-                        <h1 className="font-bold leading-4 text-xl">User Name</h1>
-                        <p>User Id</p>
-                    </div>
-                    <div className="h-full">
-                        <Avatar {...stringAvatar('Tim Neutkens')} sx={{ width: 48, height: 48 }} />
-                    </div>
+        <div className="flex">
+            <Sidebar />
+            <div className="h-screen flex w-[80rem] text-black">
+                <div className="">
+                    <Navbar />
+                    <CreateClass />
+                    <JoinClass />
+                    <p>New</p>
                 </div>
-                <div className=""><Calendar /></div>
-                <div className="flex flex-col h-[20rem]">
-                    <div className="flex justify-between items-center">
-                        <h1 className='font-bold text-2xl'>Todos</h1>
-                        <p className='underline'>See All</p>
+                <div className="bg-[#f0f0f0] h-screen w-[20rem] flex flex-col justify-between py-8 px-6">
+                    <div className="flex justify-end items-center gap-4">
+                        <div className="text-right ">
+                            <h1 className="font-bold leading-4 text-xl">User Name</h1>
+                            <p>User Id</p>
+                        </div>
+                        <div className="h-full">
+                            <Avatar {...stringAvatar('Tim Neutkens')} sx={{ width: 48, height: 48 }} />
+                        </div>
                     </div>
-                    <div className="bg-white h-[48rem] "></div>
+                    <div className=""><Calendar /></div>
+                    <div className="flex flex-col h-[20rem]">
+                        <Todos />
+                    </div>
                 </div>
             </div>
         </div>
