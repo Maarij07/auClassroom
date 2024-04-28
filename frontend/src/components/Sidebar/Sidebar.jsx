@@ -2,8 +2,15 @@ import React from 'react'
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
+import {useLogout} from '../../hooks/useLogout.jsx';
 
 const Sidebar = () => {
+    const {logout}=useLogout()
+
+    const handleClick=() => {
+        logout()
+    }
+
     return (
         <div className="flex flex-col gap-10 flex-grow bg-[#008080] h-screen w-[12rem] text-white items-center justify-around text-xl">
             <div className="">
@@ -22,7 +29,7 @@ const Sidebar = () => {
                     <span>Settings</span>
                 </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" onClick={handleClick}>
                 <RiLogoutBoxLine />
                 <button>Logout</button>
             </div>
