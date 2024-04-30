@@ -6,3 +6,5 @@ export {default as JoinClass} from './JoinClass/JoinClass.jsx';
 export {default as Todos} from './Todos/Todos.jsx';
 export {default as Login} from './Login/Login.jsx';
 export {default as Signup} from './Signup/Signup.jsx';
+export {default as Classes} from './Classes/Classes.jsx';
+export {default as ClassCard} from './ClassCard/ClassCard.jsx';

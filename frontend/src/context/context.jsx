@@ -40,7 +40,9 @@ export function ContextProvider({children}){
         setJoinClassDialog,
         login,
         loggedInMail,
+        setLoggedInMail,
         loggedInUser,
+        setLoggedInUser
      };
 
     return <AddContext.Provider value={value} >{children}</AddContext.Provider>;
