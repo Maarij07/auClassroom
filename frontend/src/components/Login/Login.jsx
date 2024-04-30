@@ -5,26 +5,34 @@ import { setUser } from '../../store/userSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import { FaGoogle } from "react-icons/fa";
 import { auth } from '../../lib/firebase';
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 
 export default function SignIn() {
     const dispatch = useDispatch();
+    const provider = new GoogleAuthProvider();
     const { loggedInUser, setLoggedInUser } = useLocalContext();
     const { user, loginWithRedirect } = useAuth0();
     const [userCredentials, setUserCredentials] = useState({});
-    // const { login, error, isLoading } = useLogin();
-    const [error, setError] = useState('')
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         if (user) {
-    //             // Set loggedInUser after user information is fetched
-    //             setLoggedInUser(user);
-    //             console.log("THis: " + loggedInUser)
-    //         }
-    //     };
-    //     fetchUser();
-    // }, [user, setLoggedInUser]);
+    const [error, setError] = useState('');
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    auth.languageCode = 'it';
+
+    function handleGoogleLogin() {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                console.log(user);
+                dispatch(setUser({ id: user.uid, email:user.email }));
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.customData;
+                const credential = GoogleAuthProvider.credentialFormError(error);
+            })
+    }
 
     function handleCredentials(e) {
         setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value })
@@ -71,7 +79,7 @@ export default function SignIn() {
                     <p onClick={handlePasswordReset} className='underline cursor-pointer font-medium text-blue-800 text-right'>Forgot Password?</p>
                     <button onClick={handleLogin} type="submit" className="rounded-md py-2 font-bold bg-gradient-to-r from-cyan-500 to-[#008080] text-white">Log in</button>
                     <p className='mx-auto text-gray-500 text-xl font-bold'>OR</p>
-                    <button className='flex gap-4 rounded-full items-center justify-center text-red-500 font-bold' onClick={(e) => loginWithRedirect()}><FaGoogle />Login With Google</button>
+                    <button className='flex gap-4 rounded-full items-center justify-center text-red-500 font-bold' onClick={handleGoogleLogin}><FaGoogle />Login With Google</button>
                 </form>
                 <div className="mt-4">
                     <p>Don't have an account? <Link className='text-blue-800 font-semibold' to="/signup"> Signup</Link> </p>
