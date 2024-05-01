@@ -1,39 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import { CreateClass, JoinClass, Todos, Sidebar } from '../index';
 import { useLocalContext } from '../../context/context';
-import {Classes} from '../index'
+import { Classes } from '../index';
 import Calendar from 'react-calendar';
-
-function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
-        color += `00${value.toString(16)}`.slice(-2);
-    }
-
-    return color;
-}
-
-function stringAvatar(name) {
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        },
-        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-}
+import { useSelector } from 'react-redux';
+import { SelectUsers } from '../../store/userSlice';
 
 const Navbar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -75,10 +49,29 @@ const Navbar = () => {
 }
 
 const Home = ({ children }) => {
-    const {loggedInUser}=useLocalContext()
-    useEffect(()=>{
-        console.log("This: " + loggedInUser);
-    },[loggedInUser])
+    const { loggedInUser } = useLocalContext();
+    useEffect(() => {}, [loggedInUser]);
+
+    const currentUser = useSelector(SelectUsers);
+    const [studentId, setStudentId] = useState(null);
+    const [altName,setAltName]=useState('My Account');
+
+    useEffect(() => {
+        if (currentUser?.currentUser?.email) {
+            const email = currentUser.currentUser.email;
+            const atIndex = email.indexOf('@');
+            const beforeAt = email.substring(0, atIndex);
+            setAltName(beforeAt);
+            const isNotNumeric = /\D/.test(beforeAt); // Checks if any character before @ is non-numeric
+            if (isNotNumeric) {
+                setStudentId(null);
+            } else {
+                setStudentId(beforeAt);
+            }
+        } else {
+            setStudentId(null);
+        }
+    }, [currentUser]);
 
     return (
         <div className="flex">
@@ -88,16 +81,16 @@ const Home = ({ children }) => {
                     <Navbar />
                     <CreateClass />
                     <JoinClass />
-                    <Classes/>
+                    <Classes />
                 </div>
                 <div className="bg-[#f0f0f0] h-screen w-[20rem] flex flex-col justify-between py-8 px-6">
                     <div className="flex justify-end items-center gap-4">
                         <div className="text-right ">
-                            <h1 className="font-bold leading-4 text-xl">User Name</h1>
-                            <p>User Id</p>
+                            <h1 className="font-bold leading-4 text-xl">{currentUser?.currentUser.name || altName }</h1>
+                            <p>{studentId}</p>
                         </div>
                         <div className="h-full">
-                            <Avatar {...stringAvatar('Tim Neutkens')} sx={{ width: 48, height: 48 }} />
+                            <Avatar src={currentUser?.currentUser?.photo} sx={{ width: 48, height: 48 }} />
                         </div>
                     </div>
                     <div className=""><Calendar /></div>
@@ -110,4 +103,4 @@ const Home = ({ children }) => {
     )
 }
 
-export default Home
+export default Home;

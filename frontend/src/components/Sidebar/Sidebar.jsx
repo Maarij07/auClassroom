@@ -2,13 +2,22 @@ import React from 'react'
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
-import {useLogout} from '../../hooks/useLogout.jsx';
+import { auth } from '../../lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/userSlice';
 
 const Sidebar = () => {
-    const {logout}=useLogout()
 
-    const handleClick=() => {
-        logout()
+    const dispatch=useDispatch();
+    function handleLogout(){
+        if(confirm('Are you sure you want to log out?')){
+            signOut(auth).then(()=>{
+                dispatch(setUser(null))
+            }).catch((error)=>{
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -29,7 +38,7 @@ const Sidebar = () => {
                     <span>Settings</span>
                 </div>
             </div>
-            <div className="flex items-center gap-2" onClick={handleClick}>
+            <div className="flex items-center gap-2" onClick={handleLogout}>
                 <RiLogoutBoxLine />
                 <button>Logout</button>
             </div>

@@ -2,9 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { SelectUsers } from './store/userSlice';
-import './App.css';
 import { Home, Login, Signup } from './components/index';
-import { IsUserRedirect, ProtectedRoute } from './Routes/Routes';
 import { useLocalContext } from './context/context';
 
 function App() {

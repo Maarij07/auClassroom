@@ -2,12 +2,15 @@ import React from 'react'
 import { useLocalContext } from '../../context/context'
 import { Avatar, Button, Dialog, Slide, TextField } from '@mui/material'
 import { Close } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { SelectUsers } from '../../store/userSlice';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
 });
 
 const JoinClass = () => {
+    const currentUser = useSelector(SelectUsers);
     const { joinClassDialog, setJoinClassDialog } = useLocalContext()
     return (
         <div className="">
@@ -27,12 +30,12 @@ const JoinClass = () => {
                         </Button>
                     </div>
                     <div className=" border-2 rounded-md mt-4 container w-[33rem] p-4">
-                        <p>
-                            You're currently signed in as 'login mail'
+                        <p className='sm:mb-[0.8rem]'>
+                            You're currently signed in as {currentUser?.currentUser?.email}
                         </p>
                         <div className="flex justify-between">
                             <div className="flex">
-                                <Avatar />
+                                <Avatar src={currentUser?.currentUser?.photo} />
                                 <div className="ml-4">
                                     <div className="font-bold">Adnan Aslam</div>
                                     <div className="text-[#5f6368] overflow-hidden text-ellipsis">Mail</div>
