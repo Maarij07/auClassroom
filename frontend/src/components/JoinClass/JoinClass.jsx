@@ -5,13 +5,14 @@ import { Close } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { SelectUsers } from '../../store/userSlice';
 
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
 });
 
 const JoinClass = () => {
     const currentUser = useSelector(SelectUsers);
-    const { joinClassDialog, setJoinClassDialog } = useLocalContext()
+    const { joinClassDialog, setJoinClassDialog ,loggedInUser } = useLocalContext()
     return (
         <div className="">
             <Dialog
@@ -37,8 +38,8 @@ const JoinClass = () => {
                             <div className="flex">
                                 <Avatar src={currentUser?.currentUser?.photo} />
                                 <div className="ml-4">
-                                    <div className="font-bold">Adnan Aslam</div>
-                                    <div className="text-[#5f6368] overflow-hidden text-ellipsis">Mail</div>
+                                    <div className="font-bold">{currentUser?.currentUser?.name}</div>
+                                    <div className="text-[#5f6368] overflow-hidden text-ellipsis">{currentUser?.currentUser?.email}</div>
                                 </div>
                             </div>
                             <Button variant='outlined' color='primary'>

@@ -21,7 +21,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className="flex flex-col gap-10 flex-grow bg-gradient-to-b from-[#5FE1A1] to-[#34516D] h-screen w-[12rem] text-white items-center justify-around text-xl">
+        <div className="flex flex-col gap-10 flex-grow bg-gradient-to-b from-[#66CCCC] to-[#0047AB] h-screen w-[12rem] text-white items-center justify-around text-xl">
             <div className="">
                 <img src="/logo.png" alt="logo" />
             </div>
