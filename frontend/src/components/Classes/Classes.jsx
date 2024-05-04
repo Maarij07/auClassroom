@@ -1,12 +1,57 @@
 import React from 'react'
 import ClassCard from '../ClassCard/ClassCard'
-
+import { onSnapshot, doc, collection } from 'firebase/firestore';
+import { useLocalContext } from '../../context/context';
+import { useState,useEffect } from 'react';
+import db from '../../lib/firebase';
 
 export default function Classes() {
+  const { loggedInMail } = useLocalContext();
+  const [createdClasses, setCreatedClasses] = useState([]);
+  const [joinedClasses, setJoinedClasses] = useState([]);
+
+  useEffect(() => {
+    if (loggedInMail) {
+      const classesCollectionRef = collection(db, `CreatedClasses/${loggedInMail}/classes`);
+      const unsubscribe = onSnapshot(classesCollectionRef, (querySnapshot) => {
+        const documentsData = [];
+        querySnapshot.forEach((doc) => {
+          documentsData.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        setCreatedClasses(documentsData);
+      });
+      return () => unsubscribe();
+    }
+  }, [loggedInMail]);
+
+  useEffect(() => {
+    if (loggedInMail) {
+      const classesCollectionRef = collection(db, `JoinedClasses/${loggedInMail}/classes`);
+      const unsubscribe = onSnapshot(classesCollectionRef, (querySnapshot) => {
+        const documentsData = [];
+        querySnapshot.forEach((doc) => {
+          documentsData.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        setJoinedClasses(documentsData);
+      });
+      return () => unsubscribe();
+    }
+  }, [loggedInMail])
+
   return (
-    <div className="sm:h-[33.6rem] overflow-auto justify-around flex flex-wrap p-6">
-        <ClassCard/>
-        <ClassCard/>
+    <div className="overflow-hidden sm:w-[54.5rem] gap-6 justify-around flex flex-wrap ">
+      {createdClasses.map((item)=>(
+        <ClassCard classData={item} />
+      ))}
+      {joinedClasses.map((item)=>(
+        <ClassCard classData={item} />
+      ))}
     </div>
   )
 }

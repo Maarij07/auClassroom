@@ -2,34 +2,66 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { SelectUsers } from './store/userSlice';
-import { Home, Login, Signup } from './components/index';
+import { ClassCard, Home, Login, Signup } from './components/index';
 import { useLocalContext } from './context/context';
-import { onSnapshot, doc } from 'firebase/firestore';
+import { onSnapshot, doc, collection } from 'firebase/firestore';
 import db from './lib/firebase';
+import {Main} from './components/index';
 
 function App() {
   const user = useSelector(SelectUsers);
 
-  const {loggedInMail} =useLocalContext();
-  const [createdClasses,setCreatedClasses]=useState([]);
+  const { loggedInMail } = useLocalContext();
+  const [createdClasses, setCreatedClasses] = useState([]);
+  const [joinedClasses, setJoinedClasses] = useState([]);
 
-  useEffect(()=>{
-    if(loggedInMail){
-      const mainDoc=doc(db,`CreatedClasses/${loggedInMail}`);
-      // const childDoc=doc(mainDoc,`classes`);
-      const unsubscribe = onSnapshot(doc(db, "CreatedClasses",`${loggedInMail}`),(doc)=>{
-        console.log(" current Data: ", doc.data());
-      })
-      return ()=> unsubscribe();
+  useEffect(() => {
+    if (loggedInMail) {
+      const classesCollectionRef = collection(db, `CreatedClasses/${loggedInMail}/classes`);
+      const unsubscribe = onSnapshot(classesCollectionRef, (querySnapshot) => {
+        const documentsData = [];
+        querySnapshot.forEach((doc) => {
+          documentsData.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        setCreatedClasses(documentsData);
+      });
+      return () => unsubscribe();
     }
-  },[loggedInMail])
+  }, [loggedInMail]);
 
-  console.log(createdClasses);
+
+  useEffect(() => {
+    if (loggedInMail) {
+      const classesCollectionRef = collection(db, `JoinedClasses/${loggedInMail}/classes`);
+      const unsubscribe = onSnapshot(classesCollectionRef, (querySnapshot) => {
+        const documentsData = [];
+        querySnapshot.forEach((doc) => {
+          documentsData.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        setJoinedClasses(documentsData);
+      });
+      return () => unsubscribe();
+    }
+  }, [loggedInMail])
 
   if (user.currentUser) {
     return (
       <BrowserRouter>
         <Routes>
+          {createdClasses.map((item) => (
+            <Route key={item.id} exact path={`/${item.id}`} element={<Main classData={item} />}>
+            </Route>
+          ))}
+          {joinedClasses.map((item) => (
+            <Route key={item.id} exact path={`/${item.id}`} element={<Main classData={item} />}>
+            </Route>
+          ))}
           <Route index element={<Home />} />
         </Routes>
       </BrowserRouter>

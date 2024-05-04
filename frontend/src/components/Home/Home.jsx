@@ -28,7 +28,7 @@ const Navbar = () => {
     return (
         <div className="w-[55rem] h-[7rem] flex items-center px-4 justify-between">
             <div className="">
-                <h1 className='text-[#008080] font-semibold text-3xl'>My Courses</h1>
+                <h1 className='text-[#032B44] font-semibold text-3xl'>My Courses</h1>
             </div>
             <div className="flex gap-4 text-3xl">
                 <IoSearchOutline className='cursor-pointer' />
@@ -83,7 +83,7 @@ const Home = ({ children }) => {
                     <JoinClass />
                     <Classes />
                 </div>
-                <div className="bg-[#f0f0f0] h-screen w-[20rem] flex flex-col justify-between py-8 px-6">
+                <div className="bg-[#f0f0f0] fixed right-0 h-screen w-[16rem] flex flex-col justify-between py-8 px-6">
                     <div className="flex justify-end items-center gap-4">
                         <div className="text-right ">
                             <h1 className="font-bold leading-4 text-xl">{currentUser?.currentUser.name || altName }</h1>

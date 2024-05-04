@@ -6,7 +6,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import db from '../../lib/firebase';
 
 const createClass= () =>{
-    const {createClassDialog,setCreateClassDialog,loggedInMail} = useLocalContext();
+    const {createClassDialog,setCreateClassDialog,loggedInMail,loggedInUser} = useLocalContext();
     const [className,setClassName]=useState('');
     const [section,setSection]=useState('');
     const [courseName,setCourseName]=useState('');
@@ -23,6 +23,7 @@ const createClass= () =>{
                 section:section,
                 courseName: courseName,
                 courseDescription: courseDescription,
+                teacher:loggedInUser.displayName,
                 id:id
         };
         setDoc(childDoc,docData);

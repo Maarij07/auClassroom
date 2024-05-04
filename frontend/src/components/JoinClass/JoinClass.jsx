@@ -16,7 +16,7 @@ const JoinClass = () => {
     const { joinClassDialog, setJoinClassDialog ,loggedInUser } = useLocalContext();
     const [classCode,setClassCode] = useState('');
     const [email,setEmail] = useState('');
-    const [error,setError] = useState('');
+    const [error,setError] = useState();
     const [joinedData,setJoinedData]= useState();
     const [classExists,setClassExists] = useState(false);
 
