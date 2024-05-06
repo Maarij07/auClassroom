@@ -8,6 +8,7 @@ import { useLocalContext } from '../../context/context';
 import { collection, doc, setDoc, Timestamp, addDoc } from 'firebase/firestore';
 import db from '../../lib/firebase';
 import QRCode from 'qrcode.react';
+import { Link } from 'react-router-dom';
 
 const Main = ({ classData }) => {
 
@@ -62,7 +63,7 @@ const Main = ({ classData }) => {
         <div className="">
             <TopBar />
             <div className="flex flex-col gap-6 items-center pt-[1.2rem]">
-                <div className="rounded-md bg-[#032B44] text-white w-[70rem] h-[11rem] flex justify-between p-6">
+                <div className="rounded-md bg-[#0071ff] text-white w-[70rem] h-[11rem] flex justify-between p-6">
                     <div className="">
                         <h1 className='font-bold text-4xl'>{classData.className}</h1>
                         <h1 className='mt-[0.2rem]'>{classData.section}</h1>
@@ -82,7 +83,7 @@ const Main = ({ classData }) => {
                         </div>
                         <div className="border-2 p-4 flex flex-col items-center gap-2 rounded-md sm:w-[14rem]">
                             <h1 className='text-md font-semibold'>Air Teams</h1>
-                            <button className='bg-[#032B44] text-white font-bold text-lg text-center px-3 py-2 rounded-md w-[10rem]'>Join Now</button>
+                            <Link to='/call' className='bg-[#0071ff] text-white font-bold text-lg text-center px-3 py-2 rounded-md w-[10rem]'>Join Now</Link>
                         </div>
                     </div>
                     <div className="flex border-2 cursor-pointer sm:h-[8rem] items-center gap-4 p-4 rounded-md sm:w-[55rem]" onClick={() => setShowInput(true)}>

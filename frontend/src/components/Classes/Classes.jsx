@@ -45,7 +45,7 @@ export default function Classes() {
   }, [loggedInMail])
 
   return (
-    <div className="overflow-hidden sm:w-[54.5rem] gap-6 justify-around flex flex-wrap ">
+    <div className="overflow-hidden sm:w-[54.5rem] py-4 gap-6 justify-around flex flex-wrap ">
       {createdClasses.map((item)=>(
         <ClassCard key={item.id} classData={item} />
       ))}

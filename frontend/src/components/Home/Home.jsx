@@ -26,7 +26,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="w-[55rem] h-[7rem] flex items-center px-4 justify-between">
+        <div className="sm:w-[53.5rem] sm:ml-[0.5rem] sticky top-0 bg-[#fff] border-[#e9eaec] border-b-2 h-[7rem] flex items-center px-4 justify-between">
             <div className="">
                 <h1 className='text-[#032B44] font-semibold text-3xl'>My Courses</h1>
             </div>
@@ -76,14 +76,14 @@ const Home = ({ children }) => {
     return (
         <div className="flex">
             <Sidebar />
-            <div className="h-screen flex w-[80rem] text-black">
+            <div className="h-screen flex sm:ml-[10.6rem] w-[80rem] text-black">
                 <div className="">
                     <Navbar />
                     <CreateClass />
                     <JoinClass />
                     <Classes />
                 </div>
-                <div className="bg-[#f0f0f0] fixed right-0 h-screen w-[16rem] flex flex-col justify-between py-8 px-6">
+                <div className="bg-[#f0f0f0] fixed right-0 h-screen w-[19.5rem] flex flex-col justify-between py-8 px-6">
                     <div className="flex justify-end items-center gap-4">
                         <div className="text-right ">
                             <h1 className="font-bold leading-4 text-xl">{currentUser?.currentUser.name || altName }</h1>

@@ -10,3 +10,4 @@ export {default as Classes} from './Classes/Classes.jsx';
 export {default as ClassCard} from './ClassCard/ClassCard.jsx';
 export {default as Main} from './Main/Main.jsx';
 export {default as TopBar} from './TopBar/TopBar.jsx';
+export {default as ZegoCloud} from './zegoCloud/zegoCloud.jsx';

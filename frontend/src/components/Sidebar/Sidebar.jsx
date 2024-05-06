@@ -6,24 +6,25 @@ import { auth } from '../../lib/firebase';
 import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/userSlice';
+import { MdOutlineVideoCameraFront } from "react-icons/md";
 
 const Sidebar = () => {
 
-    const dispatch=useDispatch();
-    function handleLogout(){
-        if(confirm('Are you sure you want to log out?')){
-            signOut(auth).then(()=>{
+    const dispatch = useDispatch();
+    function handleLogout() {
+        if (confirm('Are you sure you want to log out?')) {
+            signOut(auth).then(() => {
                 dispatch(setUser(null))
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error);
             })
         }
     }
 
     return (
-        <div className="flex flex-col gap-10 flex-grow bg-[#032B44] h-screen w-[12rem] text-white items-center justify-around text-xl">
+        <div className="flex flex-col gap-10 flex-grow bg-[#0071ff] h-screen w-[11rem] text-white items-center justify-around text-xl fixed">
             <div className="">
-                <img src="/logo.png" alt="logo" />
+                <img src="/class-logo.png" alt="logo" width={120} />
             </div>
             <div className="flex flex-col gap-6">
                 <div className="flex items-center gap-2">
@@ -31,7 +32,8 @@ const Sidebar = () => {
                     <span>Home</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span>All courses</span>
+                    <MdOutlineVideoCameraFront />
+                    <span>Meetings</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <IoSettingsOutline />
