@@ -47,10 +47,10 @@ export default function Classes() {
   return (
     <div className="overflow-hidden sm:w-[54.5rem] gap-6 justify-around flex flex-wrap ">
       {createdClasses.map((item)=>(
-        <ClassCard classData={item} />
+        <ClassCard key={item.id} classData={item} />
       ))}
       {joinedClasses.map((item)=>(
-        <ClassCard classData={item} />
+        <ClassCard key={item.id} classData={item} />
       ))}
     </div>
   )

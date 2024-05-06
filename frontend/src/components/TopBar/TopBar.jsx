@@ -27,7 +27,7 @@ const TopBar = () => {
     }, [currentUser]);
 
     return (
-        <div className="w-full flex bg-[#f0f0f0] justify-between px-10 h-[5rem]">
+        <div className="w-full flex bg-[#ffffff] border-b-2 justify-between px-10 h-[5rem]">
             <Link to='/' className="flex items-center">
                 <img src={img} alt="" width={90} />
                 <p className='font-bold text-3xl'>AU Classroom</p>
